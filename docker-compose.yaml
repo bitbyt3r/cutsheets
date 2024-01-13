@@ -6,8 +6,7 @@ services:
       - "80:80"
     restart: always
     env_file:
-      - path: .env
-        required: false
+     - .env
   watchtower:
     image: containrrr/watchtower
     volumes:
