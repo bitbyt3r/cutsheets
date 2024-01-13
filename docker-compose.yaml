@@ -1,0 +1,11 @@
+version: "3"
+services:
+  cavo:
+    image: ghcr.io/bitbyt3r/cutsheets:main
+    ports:
+      - "80:80"
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
