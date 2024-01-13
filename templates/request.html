@@ -8,11 +8,11 @@
     <div class="float-end">
         {% if request['checked_out'] %}
         <form method="POST" action="/checkin/{{ request['id'] }}">
-            <button type="submit" class="btn btn-warning">Check In All</button>
+            <button type="submit" class="btn btn-warning">Check In</button>
         </form>
         {% else %}
         <form method="POST" action="/checkout/{{ request['id'] }}">
-            <button type="submit" class="btn btn-primary">Check Out All</button>
+            <button type="submit" class="btn btn-primary">Check Out</button>
         </form>
         {% endif %}
     </div>
