@@ -1,85 +1,83 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <div style="overflow: hidden" class="p-2">
-        <div class="float-start">
-            <h3>{{ request['dept']['Name'] }}</h3>
-        </div>
-        <div class="float-end">
-            {% if request['checked_out'] %}
-            <form method="POST" action="/checkin/{{ request['id'] }}">
-                <button type="submit" class="btn btn-warning">Check In All</button>
-            </form>
-            {% else %}
-            <form method="POST" action="/checkout/{{ request['id'] }}">
-                <button type="submit" class="btn btn-primary">Check Out All</button>
-            </form>
-            {% endif %}
-        </div>
+<div style="overflow: hidden" class="p-2">
+    <div class="float-start">
+        <h3>{{ request['dept']['Name'] }}</h3>
     </div>
-    {% if request['Internal Notes'] %}
-    <div class="card" style="background-color: aquamarine;">
-        <div class="card-body">
-            <h5 class="card-title">Pickup Notes</h5>
-            {% for line in request['Internal Notes'].split("\n") %}
-            <p>{{ line }}</p>
-            {% endfor %}
-        </div>
+    <div class="float-end">
+        {% if request['checked_out'] %}
+        <form method="POST" action="/checkin/{{ request['id'] }}">
+            <button type="submit" class="btn btn-warning">Check In All</button>
+        </form>
+        {% else %}
+        <form method="POST" action="/checkout/{{ request['id'] }}">
+            <button type="submit" class="btn btn-primary">Check Out All</button>
+        </form>
+        {% endif %}
     </div>
-    {% endif %}
-    {% for section in sections %}
-    <div class="card mb-2">
-        <div class="card-header">
-            <div class="float-start">
-                <h4>{{ section['name'] }}</h4>
-            </div>
-            <!--<div class="float-end">
-                {% if section['tracked_items'] %}
-                {% if section['checked_out'] %}
-                <button type="button" class="btn btn-warning">Check In</button>
-                {% else %}
-                <button type="button" class="btn btn-primary">Check Out</button>
-                {% endif %}
-                {% endif %}
-            </div>-->
-        </div>
-        <ul class="list-group list-group-flush">
-            {% for counted in section['counted_items'] %}
-            <li class="list-group-item">
-                <div class="form-check float-start">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" {{ 'checked' if request['checked_out'] else '' }}>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        {{ counted['value'] }}x {{ counted['name'] }}
-                    </label>
-                </div>
-            </li>
-            {% endfor %}
-            {% for tracked in section['tracked_items'] %}
-            <li class="list-group-item">
-                <div class="form-check float-start">
-                    <input class="form-check-input" type="checkbox" value="" onchange="checkedBox(this, '{{ section['name'].lower() }}', '{{ tracked['id'] }}', '{{ tracked['table_id'] }}')" id="flexCheckDefault" {{ 'checked' if tracked['checked_out'] else '' }}>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        {{ tracked['name'] }}
-                    </label>
-                </div>
-                <span id="{{ section['name'].lower() }}-{{ tracked['id'] }}-spinner" class="spinner-border spinner-border-sm float-end" aria-hidden="true" hidden></span>
-            </li>
-            {% endfor %}
-            {% for textual in section['textual_items'] %}
-            <li class="list-group-item">
-                <div class="form-check float-start">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" {{ 'checked' if request['checked_out'] else '' }}>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        {{ textual }}
-                    </label>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endfor %}
 </div>
+{% if request['Internal Notes'] %}
+<div class="card" style="background-color: aquamarine;">
+    <div class="card-body">
+        <h5 class="card-title">Pickup Notes</h5>
+        {% for line in request['Internal Notes'].split("\n") %}
+        <p>{{ line }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% for section in sections %}
+<div class="card mb-2">
+    <div class="card-header">
+        <div class="float-start">
+            <h4>{{ section['name'] }}</h4>
+        </div>
+        <!--<div class="float-end">
+            {% if section['tracked_items'] %}
+            {% if section['checked_out'] %}
+            <button type="button" class="btn btn-warning">Check In</button>
+            {% else %}
+            <button type="button" class="btn btn-primary">Check Out</button>
+            {% endif %}
+            {% endif %}
+        </div>-->
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for counted in section['counted_items'] %}
+        <li class="list-group-item">
+            <div class="form-check float-start">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" {{ 'checked' if request['checked_out'] else '' }}>
+                <label class="form-check-label p-2" for="flexCheckDefault">
+                    {{ counted['value'] }}x {{ counted['name'] }}
+                </label>
+            </div>
+        </li>
+        {% endfor %}
+        {% for tracked in section['tracked_items'] %}
+        <li class="list-group-item">
+            <div class="form-check float-start">
+                <input class="form-check-input" type="checkbox" value="" onchange="checkedBox(this, '{{ section['name'].lower() }}', '{{ tracked['id'] }}', '{{ tracked['table_id'] }}')" id="flexCheckDefault" {{ 'checked' if tracked['checked_out'] else '' }}>
+                <label class="form-check-label p-2" for="flexCheckDefault">
+                    {{ tracked['name'] }}
+                </label>
+            </div>
+            <span id="{{ section['name'].lower() }}-{{ tracked['id'] }}-spinner" class="spinner-border spinner-border-sm float-end" aria-hidden="true" hidden></span>
+        </li>
+        {% endfor %}
+        {% for textual in section['textual_items'] %}
+        <li class="list-group-item">
+            <div class="form-check float-start">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" {{ 'checked' if request['checked_out'] else '' }}>
+                <label class="form-check-label p-2" for="flexCheckDefault">
+                    {{ textual }}
+                </label>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endfor %}
 <script type="text/javascript">
 async function checkedBox(cb, section, item, table_id) {
     document.getElementById(section+"-"+item+"-spinner").hidden = false

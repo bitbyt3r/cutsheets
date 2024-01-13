@@ -4,14 +4,15 @@
 <ul class="list-group">
     {% for request in requests %}
     <li class="list-group-item">
-        <a href="/request/{{ request['id'] }}">
+        <a class="float-start" href="/request/{{ request['id'] }}">
             {% if request['checked_out'] %}
-            <i class="bi-check-circle-fill" style="font-size: 1.5rem; color: green;"></i>
+            <i class="bi-check-circle-fill pe-3" style="font-size: 1.8rem; color: green;"></i>
             {% else %}
-            <i class="bi-circle" style="font-size: 1.5rem; color: orange;"></i>
+            <i class="bi-circle pe-3" style="font-size: 1.8rem; color: orange;"></i>
             {% endif %}
             {{ request['dept']['Name'] }}
         </a>
+        <p class="float-end">{{ request['Submitter'] }}</p>
     </li>
     {% endfor %}
 </ul>
