@@ -1,11 +1,16 @@
 version: "3"
 services:
-  cavo:
+  cutsheets:
     image: ghcr.io/bitbyt3r/cutsheets:main
     ports:
       - "80:80"
+    restart: always
+    env_file:
+      - path: .env
+        required: false
   watchtower:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30
+    restart: always
