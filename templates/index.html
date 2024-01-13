@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul class="list-group">
+    {% for request in requests %}
+    <li class="list-group-item">
+        <a href="/request/{{ request['id'] }}">
+            {% if request['checked_out'] %}
+            <i class="bi-check-circle-fill" style="font-size: 1.5rem; color: green;"></i>
+            {% else %}
+            <i class="bi-circle" style="font-size: 1.5rem; color: orange;"></i>
+            {% endif %}
+            {{ request['dept']['Name'] }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,13 @@
+version: "3"
+services:
+  cutsheets:
+    image: ghcr.io/bitbyt3r/cutsheets:main
+    build: .
+    ports:
+      - "80:80"
+    restart: always
+    env_file:
+     - .env
+    volumes:
+     - ./:/app
+    command: flask run --host 0.0.0.0 --port 80 --reload
