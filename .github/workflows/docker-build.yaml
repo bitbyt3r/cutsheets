@@ -1,36 +1,17 @@
 ---
-name: Backend - Build Image
+name: Build Docker Image
 
-on:
-  workflow_dispatch:
-  push:
-    branches:
-    - main
-    paths:
-    - '**'
-    - '.github/workflows/docker-build.yaml'
+on: push
 
 jobs:
-  build-backend:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: name/app
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-
       - name: Login to GHCR
         uses: docker/login-action@v1
-        if: github.event_name != 'pull_request'
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -40,6 +21,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: "."
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/bitbyt3r/cutsheets:main
-          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          tags: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
