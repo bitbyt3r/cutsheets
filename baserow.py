@@ -109,6 +109,9 @@ def get_sections(request):
             "dept:Laptops",
             "dept:AV Gear",
             "Notes",
+        ],
+        "LensRentals": [
+            "LensRentals Items"
         ]
     }
 
