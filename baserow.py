@@ -111,7 +111,7 @@ def get_sections(request):
             "Notes",
         ],
         "LensRentals": [
-            "LensRentals Items"
+            "dept:LensRentals Items"
         ]
     }
 
