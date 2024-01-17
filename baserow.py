@@ -52,6 +52,7 @@ def get_sections(request):
             "50' Ext Cords",
             "Powerstrips",
             "Single-phase Power Whips",
+            "Three-phase Power Whips",
             "dept:Power",
         ],
         "PPE": [
